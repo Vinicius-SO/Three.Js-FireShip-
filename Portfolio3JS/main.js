@@ -34,9 +34,9 @@ pointLight.position.set(5,5,5)
 const ambientLight = new THREE.AmbientLight(0xFFFFFF)
 scene.add(pointLight, ambientLight)
 
-const lightHelper = new THREE.PointLightHelper(pointLight)
-const gridHelper = new THREE.GridHelper(200,50)
-scene.add(lightHelper, gridHelper)
+//const lightHelper = new THREE.PointLightHelper(pointLight)
+// const gridHelper = new THREE.GridHelper(200,50)
+// scene.add(lightHelper, gridHelper)
 
 const controls = new OrbitControls(camera, renderer.domElement)
 
@@ -85,7 +85,30 @@ const moon = new THREE.Mesh(
 
 scene.add(moon)
 
+moon.position.z = 30
+moon.position.setX(-10);
 
+eu.position.z = -5
+eu.position.x = 2
+
+// Scroll Animation
+
+function moveCamera() {
+    const t = document.body.getBoundingClientRect().top;
+    moon.rotation.x += 0.05;
+    moon.rotation.y += 0.075;
+    moon.rotation.z += 0.05;
+  
+    eu.rotation.y += 0.01;
+    eu.rotation.z += 0.01;
+  
+    camera.position.z = t * -0.01;
+    camera.position.x = t * -0.0002;
+    camera.rotation.y = t * -0.0002;
+  }
+  
+  document.body.onscroll = moveCamera;
+  moveCamera();
 
 function animate(){
     requestAnimationFrame( animate )
@@ -94,7 +117,7 @@ function animate(){
     torus.rotation.y += 0.005
     torus.rotation.z += 0.01
 
-    controls.update();
+    // controls.update();
     
     renderer.render( scene, camera)
 }
